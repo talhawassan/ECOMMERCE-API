@@ -45,11 +45,19 @@ exports.userLogin = async (req, res) => {
         
        const user = await User.findOne({username: req.body.username})
        const pass = await User.findOne({password: req.body.password})
-       const username = user.username
+       //const USER = await User.findOne({username})
+       if (!user) {
+        return res.status(400).json({
+            status: false,
+            message: 'User does not exist'
+        })
+    }
+       //const username = user.username
        const token = jwt.sign({_id: user._id, isAdmin: user.isAdmin}, process.env.JWT_SECRET_KEY, { expiresIn: 86400 } )
        user.token = token
        const { password , ...others } = user._doc
        let userInfo = others
+      
        if(user && pass){
         res.status(200).json({
             status: true,
