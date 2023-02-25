@@ -5,7 +5,7 @@ const {registerUser, userLogin} = require('../controllers/auth')
 const {verifyToken} = require('../middleware/auth')
 
 router.post('/register/user',registerUser)
-router.post('/login/user',verifyToken,userLogin)
+router.post('/login/user',userLogin)
 
 
 module.exports = router
